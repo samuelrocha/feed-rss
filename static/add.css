@@ -1,0 +1,25 @@
+body {
+    height: 100vh;
+}
+
+h1 {
+    font-family: 'Bebas Neue', cursive;
+    margin-bottom: 2%;
+    font-size: 4em;
+}
+
+.section {
+    height: 80%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    padding: 5% 0;
+    transition: 1s;
+}
+
+.container:hover {
+    background-color: #efefef;
+}
