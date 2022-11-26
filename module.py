@@ -1,8 +1,11 @@
 import requests
 import sqlite3
+import io
+import base64
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 from os import path
+from flask import render_template
 
 def connection():
     if not path.isfile('feed-rss.db'):
@@ -17,6 +20,7 @@ def connection():
         connection = sqlite3.connect('feed-rss.db')
         cursor = connection.cursor()
     return cursor
+
 
 def feed_rss(url):
     response = requests.get(url)
@@ -33,20 +37,40 @@ def feed_rss(url):
     return feed
 
 
-def create_error_image():
+def create_error_image(msg, status=400):
     with Image.open('static/jotaro.jpg').convert('RGBA') as base:
 
         txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
         d = ImageDraw.Draw(txt)
 
-        font = ImageFont.truetype("static/RubikGlitch-Regular.ttf", 72)
-        error = "Error 400"
-        size = int(font.getlength(error))
-        x = 250 - size//2
+        error = f'error {str(status)}'
+        font1 = ImageFont.truetype("static/RubikGlitch-Regular.ttf", 72)
+        size1 = int(font1.getlength(error))
 
-        d.text((x, 515), error, font=font, fill=(255, 0, 0, 255))
+        px = 48
+        while True:
+            font2 = ImageFont.truetype("static/RubikGlitch-Regular.ttf", px)
+            size2 = int(font2.getlength(msg))
+            if size2 < 500:
+                break
+            px -= 10
 
+        x1 = 250 - size1//2
+        x2 = 250 - size2//2
+
+        d.text((x1, 515), error, font=font1, fill=(255, 0, 0, 255))
+        d.text((x2, 50), msg, font=font2, fill=(0, 0, 0, 255))
+
+        # convert the image to base64
         out = Image.alpha_composite(base, txt)
-        out.save('static/error.png', 'PNG')
+        img_byte_arr = io.BytesIO()
+        out.save(img_byte_arr, format='PNG')
+        img_byte_arr = img_byte_arr.getvalue()
+        base = base64.b64encode(img_byte_arr)
+        img = base.decode()
 
-        return out
+        return img
+
+def apology(msg, code):
+    img = create_error_image(msg, code)
+    return render_template('error.html', img=img)

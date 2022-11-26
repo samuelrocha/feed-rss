@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
-from module import feed_rss, create_error_image
+from module import feed_rss, apology
+
 
 app = Flask(__name__)
 
@@ -19,12 +20,12 @@ def add_view():
         category = request.form['category']
 
         if not name or not url or not category:
-            return redirect('/error')
+            return apology("fill in all fields", 400)
 
     return render_template('add.html')
 
 
 @app.route('/error')
 def error():
-    img = create_error_image()
-    return render_template('error.html', img=img)
+    
+    return apology('Congratulations, you know how to use the URL', 400)

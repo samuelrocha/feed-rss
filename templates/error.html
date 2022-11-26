@@ -1,11 +1,24 @@
 {% extends 'layout.html' %}
 
-{% block title %} 
+{% block config %}
+<link rel="stylesheet" href="../static/error.css">
+{% endblock %}
+
+
+{% block title %}
 Error
 {% endblock %}
 
-{% block main %} 
-<h1>ERROR</h1>
-<img src="{{img.load()}}" alt="">
-{{img.load()}}
+{% block main %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col text-center">
+            <img id="ItemPreview" src="" alt="">
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("ItemPreview").src = "data:/png;base64," + '{{img}}'
+</script>
 {% endblock %}
