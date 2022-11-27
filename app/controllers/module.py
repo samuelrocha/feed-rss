@@ -7,7 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 from os import path
 from flask import render_template
 
-def connection():
+def create_database():
     if not path.isfile('feed-rss.db'):
         connection = sqlite3.connect('feed-rss.db')
         cursor = connection.cursor()
@@ -16,10 +16,8 @@ def connection():
 
         for script in scripts.split(';'):
             cursor.execute(script)
-    else:
-        connection = sqlite3.connect('feed-rss.db')
-        cursor = connection.cursor()
-    return cursor
+        connection.commit()
+        connection.close()
 
 
 def feed_rss(url):
@@ -37,8 +35,8 @@ def feed_rss(url):
     return feed
 
 
-def create_error_image(msg, status=400):
-    with Image.open('static/jotaro.jpg').convert('RGBA') as base:
+def apology(msg, status=400):
+    with Image.open('../static/jotaro.jpg').convert('RGBA') as base:
 
         txt = Image.new("RGBA", base.size, (255, 255, 255, 0))
         d = ImageDraw.Draw(txt)
@@ -69,8 +67,4 @@ def create_error_image(msg, status=400):
         base = base64.b64encode(img_byte_arr)
         img = base.decode()
 
-        return img
-
-def apology(msg, code):
-    img = create_error_image(msg, code)
-    return render_template('error.html', img=img)
+        return render_template('error.html', img=img)

@@ -1,8 +1,6 @@
-from flask import Flask, render_template, request, redirect
-from module import feed_rss, apology
-
-
-app = Flask(__name__)
+from app import app
+from flask import render_template, request
+from app.controllers.module import feed_rss, apology
 
 
 @app.route('/')
@@ -27,5 +25,4 @@ def add_view():
 
 @app.route('/error')
 def error():
-    
     return apology('Congratulations, you know how to use the URL', 400)
