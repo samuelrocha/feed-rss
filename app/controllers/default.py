@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request
+from flask import render_template, request, url_for
 from app.controllers.module import feed_rss, apology
 
 
@@ -26,3 +26,8 @@ def add_view():
 @app.route('/error')
 def error():
     return apology('Congratulations, you know how to use the URL', 400)
+
+
+@app.route('/test')
+def test():
+    return 'OK'

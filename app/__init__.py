@@ -9,4 +9,4 @@ db.init_app(app)
 
 migrate = Migrate(app, db)
 
-from app.controllers import default
+from app.controllers import default, module
