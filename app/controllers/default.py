@@ -1,26 +1,50 @@
-from app import app
-from flask import render_template, request, url_for
-from app.controllers.module import feed_rss, apology
+from app import app, db, login_manager
+from flask import render_template, request, redirect
+from app.controllers.helpers import feed_rss, apology
 from app.models.forms import LoginForm
+from werkzeug.exceptions import HTTPException
+from app.models.tables import User
+from flask_login import login_user, logout_user, login_required
+
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(id)
 
 
 @app.route('/')
+@login_required
 def index():
     feed = feed_rss('https://diolinux.com.br/feed')
     return render_template('index.html', feed=feed)
 
 
-@app.route('/login', methods=['GET','POST'])
+@app.route('/logout')
+def test():
+    logout_user()
+    return redirect('/login')
+
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            return "YES BABY"
+            user = db.session.execute(
+                db.select(User).filter_by(username=form.username.data)).one()
+
+            if user[0] and user[0].hash == form.hash.data:
+                login_user(user[0])
+                return redirect('/')
+            else:
+                return redirect('/login')
         else:
-            return apology('bakka',404)
+            return [form.username.errors, form.hash.errors]
     return render_template('login.html', form=form)
 
+
 @app.route('/add', methods=['GET', 'POST'])
+@login_required
 def add_view():
     if request.method == 'POST':
 
@@ -34,11 +58,6 @@ def add_view():
     return render_template('add.html')
 
 
-@app.route('/error')
-def error():
-    return apology('Congratulations, you know how to use the URL', 400)
-
-
-@app.route('/test')
-def test():
-    return 'OK'
+@app.errorhandler(HTTPException)
+def handle_bad_request(e):
+    return apology(e.name, e.code)

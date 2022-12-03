@@ -16,6 +16,21 @@ class User(db.Model):
         self.email = email
         self.hash = hash
 
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous():
+        return False
+
+    def get_id(self):
+        return str(self.id)
+
 
 class Category(db.Model):
     __tablename__ = 'categories'
@@ -34,8 +49,8 @@ class Feed(db.Model):
     portalname = db.Column(db.String, nullable=False)
     link = db.Column(db.String, nullable=False)
     edit_date = db.Column(db.Date, nullable=False)
-    user_id = db.Column(db.Interger, db.ForeignKey('users.id'))
-    category_id = db.Column(db.Interger, db.ForeignKey('categories.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
     user = db.relationship('User', foreign_keys=user_id)
     category = db.relationship('Category', foreign_keys=category_id)
@@ -56,8 +71,8 @@ class Save(db.Model):
     link = db.Column(db.String, nullable=False)
     post_date = db.Column(db.Date, nullable=False)
     edit_date = db.Column(db.Date, nullable=False)
-    user_id = db.Column(db.Interger, db.ForeignKey('users.id'))
-    category_id = db.Column(db.Interger, db.ForeignKey('categories.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
     user = db.relationship('User', foreign_keys=user_id)
     category = db.relationship('Category', foreign_keys=category_id)

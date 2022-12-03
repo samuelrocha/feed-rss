@@ -5,7 +5,8 @@ import base64
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 from os import path
-from flask import render_template, url_for
+from flask import render_template
+
 
 def create_database():
     if not path.isfile('feed-rss.db'):
@@ -35,7 +36,6 @@ def feed_rss(url):
     return feed
 
 
-
 def apology(msg, status=400):
     with Image.open('app/static/img/jotaro.jpg').convert('RGBA') as base:
 
@@ -43,12 +43,14 @@ def apology(msg, status=400):
         d = ImageDraw.Draw(txt)
 
         error = f'error {str(status)}'
-        font1 = ImageFont.truetype("app/static/fonts/RubikGlitch-Regular.ttf", 72)
+        font1 = ImageFont.truetype(
+            "app/static/fonts/RubikGlitch-Regular.ttf", 72)
         size1 = int(font1.getlength(error))
 
         px = 48
         while True:
-            font2 = ImageFont.truetype("app/static/fonts/RubikGlitch-Regular.ttf", px)
+            font2 = ImageFont.truetype(
+                "app/static/fonts/RubikGlitch-Regular.ttf", px)
             size2 = int(font2.getlength(msg))
             if size2 < 500:
                 break
