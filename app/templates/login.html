@@ -5,21 +5,25 @@ Login
 {% endblock %}
 
 {% block main %}
+{% if msg %}
+{{ msg }}
+{% endif %}
 <form class="container" action="/login" method="POST">
     {{ form.csrf_token }}
     <div class="mb-3">
-        <label for="staticEmail2" class="form-label">Username</label>
-        {{ form.username(class="form-control", placeholder="username", id="staticEmail2") }}
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control", placeholder="username") }}
     </div>
     <div class="mb-3">
-        <label for="inputPassword2" class="form-label">Password</label>
-        {{ form.hash(class="form-control", placeholder="Password", id="inputPassword2")}}
+        {{ form.password.label(class="form-label") }}
+        {{ form.password(class="form-control", placeholder="password") }}
     </div>
     <div class="mb-3">
-        {{ form.remember_me(class="form-check-input", id="flexCheckDefault")}}
-        <label class="form-check-label" for="flexCheckDefault">
-            Remeber me
-        </label>
+        {{ form.remember_me(class="form-check-input") }}
+        {{ form.remember_me.label(class="form-check-label") }}
+    </div>
+    <div class="mb-3">
+        {{ form.recaptcha }}
     </div>
     <div class="mb-3">
         <button type="submit" class="btn btn-primary mb-3">Login</button>
