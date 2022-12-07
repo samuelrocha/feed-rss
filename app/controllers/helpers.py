@@ -1,5 +1,4 @@
 import requests
-import sqlite3
 import io
 import base64
 from bs4 import BeautifulSoup
@@ -8,23 +7,8 @@ from os import path
 from flask import render_template
 
 
-def create_database():
-    if not path.isfile('feed-rss.db'):
-        connection = sqlite3.connect('feed-rss.db')
-        cursor = connection.cursor()
-        with open('table.sql') as table:
-            scripts = table.read()
-
-        for script in scripts.split(';'):
-            cursor.execute(script)
-        connection.commit()
-        connection.close()
-
-
 def feed_rss(url):
-    response = requests.get(url)
-
-    soup = BeautifulSoup(response.content, 'xml')
+    soup = get_xml(url)
 
     feed = []
     for item in soup.find_all('item'):
@@ -34,6 +18,12 @@ def feed_rss(url):
         })
 
     return feed
+
+
+def get_xml(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'xml')
+    return soup
 
 
 def apology(msg, status=400):

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import StringField, PasswordField, BooleanField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, IntegerField, SelectField, URLField
 from wtforms.validators import InputRequired, Email, EqualTo, Length
 
 class LoginForm(FlaskForm):
@@ -18,5 +18,5 @@ class RegisterForm(FlaskForm):
     
 
 class AddFeedForm(FlaskForm):
-    link = StringField('link', [InputRequired()])
-    category = IntegerField('category', [InputRequired()])
+    url = URLField('Link', [InputRequired(), Length(max=250)])
+    category_id = SelectField('Category', [InputRequired()], coerce=int)

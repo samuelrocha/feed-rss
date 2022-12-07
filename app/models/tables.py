@@ -47,7 +47,8 @@ class Feed(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     portalname = db.Column(db.String, nullable=False)
-    link = db.Column(db.String, nullable=False)
+    url = db.Column(db.String, nullable=False)
+    description = db.Column(db.String)
     edit_date = db.Column(db.Date, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
@@ -55,9 +56,10 @@ class Feed(db.Model):
     user = db.relationship('User', foreign_keys=user_id)
     category = db.relationship('Category', foreign_keys=category_id)
 
-    def __init__(self, portalname, link, edit_date, user_id, category_id):
+    def __init__(self, portalname, url, description, edit_date, user_id, category_id):
         self.portalname = portalname
-        self.link = link
+        self.url = url
+        self.description = description
         self.edit_date = edit_date
         self.user_id = user_id
         self.category_id = category_id

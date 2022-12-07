@@ -1,7 +1,7 @@
 from app import app, db, login_manager
 from flask import render_template, request, redirect
 from app.controllers.helpers import feed_rss, apology
-from app.models.forms import LoginForm, RegisterForm
+from app.models.forms import LoginForm, RegisterForm, AddFeedForm
 from werkzeug.exceptions import HTTPException
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.models.tables import User
@@ -80,22 +80,6 @@ def register():
             msg = 'username or email already exists'
 
     return render_template('register.html', form=form, msg=msg)
-
-
-@app.route('/add', methods=['GET', 'POST'])
-@login_required
-def add_view():
-    if request.method == 'POST':
-
-        name = request.form['name']
-        url = request.form['url']
-        category = request.form['category']
-
-        if not name or not url or not category:
-            return apology("fill in all fields", 400)
-
-    return render_template('add.html')
-
 
 @app.errorhandler(HTTPException)
 def handle_bad_request(e):
