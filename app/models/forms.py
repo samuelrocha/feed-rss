@@ -18,5 +18,9 @@ class RegisterForm(FlaskForm):
     
 
 class AddFeedForm(FlaskForm):
-    url = URLField('Link', [InputRequired(), Length(max=250)])
+    url = URLField('URL', [InputRequired(), Length(max=250)])
+    category_id = SelectField('Category', [InputRequired()], coerce=int)
+
+class EditFeedForm(FlaskForm):
+    url = URLField('URL', [InputRequired(), Length(max=250)])
     category_id = SelectField('Category', [InputRequired()], coerce=int)

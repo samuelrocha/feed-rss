@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Feed List
+{% endblock %}
+
+{% block main %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Portal Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Last Update</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for feed in feeds %}
+        <tr>
+            <td>{{ feed[1] }}</td>
+            <td>{{ feed[2] }}</td>
+            <td>{{ feed[3].strftime("%d/%m/%Y") }}</td>
+            <td><a href="/feed/edit/{{feed[0]}}">Edit</a></td>
+            <td><a href="/feed/remove/{{feed[0]}}">Remove</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

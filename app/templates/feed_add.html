@@ -11,7 +11,7 @@ Add
 
 
 {% block main %}
-<form class="container" action="/add" method="POST">
+<form class="container" action="/feed/add" method="POST">
     {{ form.csrf_token }}
     <div class="mb-3">
         {{ form.url.label(class="form-label") }}
