@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 from os import path
 from flask import render_template
+from sqlalchemy.exc import NoResultFound
+from app import db
+from requests.exceptions import MissingSchema
 
 
 def feed_rss(url):
@@ -21,10 +24,20 @@ def feed_rss(url):
 
 
 def get_xml(url):
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, 'xml')
-    return soup
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'xml')
+        return soup
+    except MissingSchema:
+        return False
 
+
+def get_feed(smtm):
+    try:
+        row = db.session.execute(smtm).one()
+        return row[0]    
+    except NoResultFound:
+        return False
 
 def apology(msg, status=400):
     with Image.open('app/static/img/jotaro.jpg').convert('RGBA') as base:
