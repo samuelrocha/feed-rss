@@ -80,6 +80,7 @@ def update_feed(id=None):
                                   current_user.id).where(Feed.id == form.id.data)
 
         feed = get_feed(smtm)
+        feed = feed[0][0]
         if feed:
             feed.url = form.url.data
             feed.category_id = form.category_id.data
@@ -108,7 +109,7 @@ def update_feed(id=None):
                               current_user.id).where(Feed.id == id)
 
     feed = get_feed(smtm)
-
+    feed = feed[0][0]
     if feed:
         categories = db.session.execute(
             select(Category).order_by(Category.name)).all()

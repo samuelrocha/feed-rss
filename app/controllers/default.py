@@ -1,12 +1,13 @@
 from app import app, db, login_manager
 from flask import render_template, request, redirect
 from app.controllers.helpers import feed_rss, apology
-from app.models.forms import LoginForm, RegisterForm, AddFeedForm
+from app.models.forms import LoginForm, RegisterForm
 from werkzeug.exceptions import HTTPException
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.models.tables import User
 from flask_login import login_user, logout_user, login_required
 from sqlalchemy.exc import NoResultFound, IntegrityError
+from datetime import timezone, timedelta
 
 
 @login_manager.user_loader
@@ -17,8 +18,14 @@ def load_user(username):
 @app.route('/')
 @login_required
 def index():
-    feed = feed_rss('https://diolinux.com.br/feed')
-    return render_template('index.html', feed=feed)
+    diferenca = timedelta(hours=-3)
+    fuso = timezone(diferenca)
+
+    items = feed_rss('https://diolinux.com.br/feed')
+    for i, item in enumerate(items):
+        brazil_utc = item['post_date'].astimezone(fuso)
+        item['post_date'] = brazil_utc.strftime("%H:%M:%S %d/%m/%Y")
+    return render_template('index.html', feed=items)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -80,6 +87,7 @@ def register():
             msg = 'username or email already exists'
 
     return render_template('register.html', form=form, msg=msg)
+
 
 @app.errorhandler(HTTPException)
 def handle_bad_request(e):
