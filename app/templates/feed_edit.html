@@ -5,11 +5,8 @@ Edit Feed
 {% endblock %}
 
 {% block main %}
-<form class="container" action="/feed/edit" method="POST">
-    {{ form.csrf_token }}
-    <div class="mb-3">
-        {{ form.id(class="form-control d-none") }}
-    </div>
+{{ form.csrf_token }}
+<form class="container" action="/feed/edit/{{form.id.data}}" method="POST">
     <div class="mb-3">
         {{ form.portalname.label(class="form-label") }}
         {{ form.portalname(class="form-control", disabled=True) }}

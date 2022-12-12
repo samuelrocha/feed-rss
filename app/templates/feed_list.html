@@ -18,11 +18,11 @@ Feed List
     <tbody>
         {% for feed in feeds %}
         <tr>
-            <td>{{ feed[1] }}</td>
-            <td>{{ feed[2] }}</td>
-            <td>{{ feed[3].strftime("%d/%m/%Y") }}</td>
-            <td><a href="/feed/edit/{{feed[0]}}">Edit</a></td>
-            <td><a href="/feed/remove/{{feed[0]}}">Remove</a></td>
+            <td>{{ feed.portalname }}</td>
+            <td>{{ feed.name }}</td>
+            <td>{{ feed.edit_date.strftime("%d/%m/%Y") }}</td>
+            <td><a href="/feed/edit/{{feed.id}}">Edit</a></td>
+            <td><a href="/feed/remove/{{feed.id}}">Remove</a></td>
         </tr>
         {% endfor %}
     </tbody>
