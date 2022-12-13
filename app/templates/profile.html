@@ -1,0 +1,14 @@
+{% extends "layout.html" %} 
+
+{% block title %} 
+Profile
+{% endblock %} 
+
+{% block main %}
+<img src="https://avatars.dicebear.com/api/bottts/:{{current_user.id}}.svg" alt="" width="20%">
+<ul>
+    <li>Nickname: {{ current_user.name }} <a href="/profile/edit/nickname">Change</a></li>
+    <li>Email: {{ current_user.email }} <a href="/profile/edit/email">Change</a></li>
+    <li>Password: *** <a href="/profile/edit/password">Change</a></li>
+</ul>
+{% endblock %}

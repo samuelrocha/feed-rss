@@ -62,3 +62,20 @@ class User(db.Model):
             return user
         else:
             return False
+
+    def update_user():
+
+        try:
+            db.session.commit()
+            return True
+        except IntegrityError:
+            return False
+
+    def update_password(user, new_password):
+        user.hash = generate_password_hash(new_password)
+        User.update_user()
+        
+
+    def remove_user(user):
+        db.session.delete(user)
+        db.session.commit()

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit Nickname
+{% endblock %}
+
+{% block main %}
+<form class="container" action="/profile/edit/nickname" method="POST">
+    {{ form.csrf_token }}
+    <div class="mb-3">
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control", placeholder="New Nickname", autofocus=True) }}
+    </div>
+    <div class="mb-3">
+        <a href="/profile" class="btn btn-primary mb-3">Cancel</a>
+        <button type="submit" class="btn btn-primary mb-3">Save</button>
+    </div>
+</form>
+{% endblock %}
