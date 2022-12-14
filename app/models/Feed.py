@@ -1,6 +1,5 @@
 from app import db
 from sqlalchemy import select
-from sqlalchemy.exc import NoResultFound
 from app.models.Category import Category
 from app.controllers.helpers import get_xml
 from datetime import datetime
@@ -32,7 +31,17 @@ class Feed(db.Model):
     def get_feed_by_id(id):
         smtm = select(Feed).where(Feed.id == id).where(
             Feed.user_id == current_user.id)
-        
+
+        row = db.session.execute(smtm).first()
+        if row:
+            return row[0]
+        else:
+            return False
+
+    def get_feed_by_portalname(portalname):
+        smtm = select(Feed).where(Feed.portalname == portalname).where(
+            Feed.user_id == current_user.id)
+
         row = db.session.execute(smtm).first()
         if row:
             return row[0]
@@ -53,13 +62,13 @@ class Feed(db.Model):
             xml = get_xml(feed.url)
             for item in xml.find_all('item'):
                 pub_date = datetime.strptime(
-                item.pubDate.string, "%a, %d %b %Y %H:%M:%S %z")
+                    item.pubDate.string, "%a, %d %b %Y %H:%M:%S %z")
                 items.append({
-                        'title': item.title.string,
-                        'link': item.link.string,
-                        'portalname': feed.portalname,
-                        'category': feed.name,
-                        'post_date': pub_date
+                    'title': item.title.string,
+                    'link': item.link.string,
+                    'portalname': feed.portalname,
+                    'category': feed.name,
+                    'post_date': pub_date
                 })
         return items
 
@@ -91,7 +100,7 @@ class Feed(db.Model):
             feed.url = form.url.data
             feed.category_id = form.category_id.data
             feed.edit_date = datetime.now()
-            
+
             xml = get_xml(feed.url)
 
             try:

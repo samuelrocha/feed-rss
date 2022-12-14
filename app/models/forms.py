@@ -1,5 +1,5 @@
-from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import StringField, PasswordField, BooleanField, IntegerField, SelectField, URLField, TextAreaField
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SelectField, URLField, TextAreaField, DateTimeField
 from wtforms.validators import InputRequired, Email, EqualTo, Length
 
 
@@ -8,9 +8,6 @@ class LoginForm(FlaskForm):
         6, 21, "At least 6 characters, maximum 21")])
     password = PasswordField('Password', [InputRequired(), Length(
         8, 21, "At least 8 characters, maximum 21")])
-    remember_me = BooleanField('Remember me')
-    recaptcha = RecaptchaField()
-
 
 class RegisterForm(FlaskForm):
     username = StringField('Username', [InputRequired(), Length(
@@ -22,7 +19,6 @@ class RegisterForm(FlaskForm):
         'confirm', 'Password must be match'), Length(8, 21, "At least 8 characters, maximum 21")])
     confirm = PasswordField('Repeat Password', [InputRequired(), Length(
         8, 21, "At least 8 characters, maximum 21")])
-    recaptcha = RecaptchaField()
 
 
 class AddFeedForm(FlaskForm):

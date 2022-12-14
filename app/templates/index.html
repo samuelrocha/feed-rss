@@ -18,11 +18,14 @@ Home
     <tbody>
         {% for item in feed %}
         <tr>
+
             <td><a href="{{item['link']}}" target="_blank">{{item['title']}}</a></td>
             <td>{{ item['portalname'] }}</td>
             <td>{{ item['category'] }}</td>
             <td>{{ item['post_date'] }}</td>
-            <td><a href="/save">Save</a></td>
+            <td><a class="btn btn-light"
+                    href="/save?title={{item['title']}}&link={{item['link']}}&portalname={{item['portalname']}}&post_date={{item['post_date']}}">Save</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
