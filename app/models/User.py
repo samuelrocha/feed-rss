@@ -58,10 +58,10 @@ class User(db.Model):
 
     def check_password(form):
         user = User.get_user_by_username(form.username.data)
-        if check_password_hash(user.hash, form.password.data):
-            return user
-        else:
-            return False
+        if user:
+            if check_password_hash(user.hash, form.password.data):
+                return user
+        return False
 
     def update_user():
 
