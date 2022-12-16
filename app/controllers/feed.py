@@ -3,7 +3,7 @@ from flask import render_template, request, redirect
 from app.models.forms import AddFeedForm, EditFeedForm
 from flask_login import login_required
 from app.models.Feed import Feed
-from app.models.Category import Category
+from app.models.List import Category
 from datetime import timezone, timedelta
 
 

@@ -16,4 +16,4 @@ migrate = Migrate(app, db)
 
 
 from app.controllers import feed, helpers, errors, user, save
-from app.models import Save, Feed, Category, User
+from app.models import List, Save, Feed, User
