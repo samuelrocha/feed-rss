@@ -23,7 +23,7 @@ class RegisterForm(FlaskForm):
 
 class AddFeedForm(FlaskForm):
     url = URLField('URL', [InputRequired(), Length(max=250)])
-    category_id = SelectField('Category', [InputRequired()], coerce=int)
+    list_id = SelectField('List', [InputRequired()], coerce=int)
 
 
 class EditFeedForm(FlaskForm):
@@ -31,7 +31,7 @@ class EditFeedForm(FlaskForm):
     portalname = StringField("Portalname", [InputRequired()])
     description = TextAreaField("Description", [InputRequired()])
     url = URLField('URL', [InputRequired(), Length(max=250)])
-    category_id = SelectField('Category', [InputRequired()], coerce=int)
+    list_id = SelectField('List', [InputRequired()], coerce=int)
 
 
 class EditNicknameForm(FlaskForm):

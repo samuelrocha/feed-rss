@@ -1,8 +1,9 @@
-from app import app
+from app import app, db
 from flask import render_template, redirect
 from app.models.forms import LoginForm, RegisterForm, EditNicknameForm, EditEmailForm, EditPasswordForm
 from app.models.User import User
 from flask_login import login_user, logout_user, current_user, login_required
+from app.models.List import List
 
 
 @app.get('/login')
@@ -55,6 +56,9 @@ def register_post():
         user = User.create_user(form)
         if user:
             login_user(user)
+            l = List('General', current_user.id)
+            db.session.add(l)
+            db.session.commit()
             return redirect('/newsfeed')
         else:
             return "USUÁRIO JÁ EXISTE"
