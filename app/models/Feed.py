@@ -8,7 +8,7 @@ class Feed(db.Model):
     portalname = db.Column(db.String, nullable=False)
     url = db.Column(db.String, nullable=False)
     description = db.Column(db.String)
-    update_date = db.Column(db.Date, nullable=False)
+    update_date = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, portalname, url, description, update_date):
         self.portalname = portalname

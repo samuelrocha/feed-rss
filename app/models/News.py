@@ -1,12 +1,12 @@
 from app import db
 
-class New(db.Model):
+class News(db.Model):
     __tablename__ = 'news'
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     url = db.Column(db.String, nullable=False)
-    post_date = db.Column(db.Date, nullable=False)
+    post_date = db.Column(db.DateTime, nullable=False)
     feed_id = db.Column(db.Integer, db.ForeignKey('feeds.id'))
 
     feed = db.relationship('Feed', foreign_keys=feed_id)

@@ -1,8 +1,8 @@
 """Initial migration.
 
-Revision ID: 9fa0d1704ab0
+Revision ID: 2a75f1ba7e64
 Revises: 
-Create Date: 2022-12-16 16:41:02.372235
+Create Date: 2022-12-16 20:52:04.437370
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9fa0d1704ab0'
+revision = '2a75f1ba7e64'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +23,7 @@ def upgrade():
     sa.Column('portalname', sa.String(), nullable=False),
     sa.Column('url', sa.String(), nullable=False),
     sa.Column('description', sa.String(), nullable=True),
-    sa.Column('update_date', sa.Date(), nullable=False),
+    sa.Column('update_date', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
@@ -47,7 +47,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('url', sa.String(), nullable=False),
-    sa.Column('post_date', sa.Date(), nullable=False),
+    sa.Column('post_date', sa.DateTime(), nullable=False),
     sa.Column('feed_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['feed_id'], ['feeds.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -62,7 +62,7 @@ def upgrade():
     )
     op.create_table('saved',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('save_date', sa.Date(), nullable=False),
+    sa.Column('save_date', sa.DateTime(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('news_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['news_id'], ['news.id'], ),

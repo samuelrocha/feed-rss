@@ -7,6 +7,7 @@ from app.models.List import List
 from app.models.Feed import Feed
 from app.models.List_Feed import List_Feed
 from app.models.User import User
+from app.models.News import News
 from app.controllers.helpers import get_xml
 from datetime import datetime
 
@@ -51,6 +52,16 @@ def add_feed():
                     db.session.add(feed)
                     db.session.commit()
                     feed_id = feed.id
+                    for item in xml.find_all('item'):
+                        pub_date = datetime.strptime(item.pubDate.string, "%a, %d %b %Y %H:%M:%S %z")
+                        news = News(item.title.string, item.link.string, pub_date, feed_id)
+
+                        smtm = db.select(News).where(News.url == news.url)
+                        old_news = db.session.execute(smtm).first()
+
+                        if not old_news:
+                            db.session.add(news)
+
                 except AttributeError:
                     return "INCORRECT XML"
             else:
