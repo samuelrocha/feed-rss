@@ -2,7 +2,6 @@ from app import app, db
 from app.models.Feed import Feed
 from app.models.List import List
 from app.models.News import News
-from app.models.User import User
 from app.models.List_Feed import List_Feed
 from flask_login import login_required, current_user
 from datetime import datetime, timedelta
@@ -13,7 +12,7 @@ from flask import render_template
 @login_required
 def news():
 
-    smtm = db.select(Feed).join(List_Feed.list).join(List_Feed.feed).where(List.user_id == current_user.id)
+    smtm = db.select(Feed, List).join(List_Feed.list).join(List_Feed.feed).where(List.user_id == current_user.id)
     feeds = db.session.execute(smtm).all()
     
     now = datetime.now()
@@ -52,22 +51,7 @@ def news():
         smtm = db.select(News).join(News.feed).where(News.feed_id == feed[0].id)
         news = db.session.execute(smtm).all()
 
-        #news = [[list(item)] for item in news]
-
-        smtm = db.select(List).join(List_Feed.feed).join(List_Feed.list).join(List.user).where(List_Feed.feed_id == feed[0].id).where(User.id == current_user.id)
-        listr = db.session.execute(smtm).all()
-
-        #print(listr)
-        
-        #item = [(item[0], feed[0], listr[0][0]) for item in news]
-
-        # quantidade de categorias
-        length = len(listr)
-
-        for n in news:
-            items.append((n[0], feed[0], listr[0][0]))
-
-        #items += item
+        items += [(item[0], feed[1]) for item in news]
 
 
     items = sorted(items, key=lambda item: item[0].post_date, reverse=True)
