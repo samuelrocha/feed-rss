@@ -6,6 +6,8 @@ from PIL import Image, ImageDraw, ImageFont
 from flask import render_template
 from requests.exceptions import MissingSchema
 
+PER_PAGE = 15
+
 def get_xml(url):
     try:
         response = requests.get(url)

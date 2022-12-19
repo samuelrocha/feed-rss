@@ -7,9 +7,8 @@ from datetime import datetime, timedelta
 from app.controllers.helpers import get_xml
 from flask import render_template, request
 from flask_paginate import Pagination, get_page_parameter
-from app.controllers.helpers import apology
+from app.controllers.helpers import apology, PER_PAGE
 
-PER_PAGE = 15
 
 @app.route('/news')
 @login_required
@@ -38,7 +37,7 @@ def news():
             xml = get_xml(item[0].feed.url)
             for element in xml.find_all('item'):
                 pub_date = datetime.strptime(element.pubDate.string, "%a, %d %b %Y %H:%M:%S %z")
-                news = News(element.title.string, element.link.string, pub_date, item.feed.id)
+                news = News(element.title.string, element.link.string, pub_date, item[0].feed.id)
 
                 smtm = db.select(News).where(News.url == news.url)
                 old_news = db.session.execute(smtm).first()
@@ -67,7 +66,6 @@ def news():
 
         item[0].post_date += utc
 
-
     length = len(items)
 
     search = False
@@ -86,4 +84,5 @@ def news():
     items = items[i:i+PER_PAGE]
     pagination = Pagination(page=page, total=length, search=search, record_name='items', per_page=PER_PAGE)
     
+
     return render_template('index.html', feed=items, pagination=pagination)

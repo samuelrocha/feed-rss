@@ -10,23 +10,9 @@ from app.models.User import User
 from app.models.News import News
 from app.controllers.helpers import get_xml
 from datetime import datetime
+from flask_paginate import Pagination, get_page_parameter
+from app.controllers.helpers import apology, PER_PAGE
 
-# working
-
-"""@app.get('/newsfeed')
-@login_required
-def index():
-    diferenca = timedelta(hours=-3)
-    fuso = timezone(diferenca)
-
-    items = Feed.get_newsfeed()
-    items = sorted(items, key=lambda item: item['post_date'], reverse=True)
-
-    for i, item in enumerate(items):
-        brazil_utc = item['post_date'].astimezone(fuso)
-        item['post_date'] = brazil_utc.strftime("%H:%M:%S %d/%m/%Y")
-    return render_template('index.html', feed=items)
-"""
 
 # CREATE
 @app.route('/feed/add', methods=['GET', 'POST'])
@@ -91,7 +77,25 @@ def list_feed():
     smtm = db.select(Feed, List, List_Feed).join(List_Feed.list).join(List_Feed.feed).where(List.user_id == current_user.id)
     feeds = db.session.execute(smtm).all()
 
-    return render_template("feed_list.html", feeds=feeds)
+    length = len(feeds)
+
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+
+
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+
+    last_page = length // PER_PAGE + 1
+    if page > last_page:
+        return apology('Not Found', 404)
+
+    i = (page-1)*PER_PAGE
+    feeds = feeds[i:i+PER_PAGE]
+    pagination = Pagination(page=page, total=length, search=search, record_name='feeds', per_page=PER_PAGE)
+
+    return render_template("feed_list.html", feeds=feeds, pagination=pagination)
 
 # UPDATE
 @app.route("/feed/edit/<id>", methods=["GET", "POST"])
