@@ -18,10 +18,9 @@ Home
     <tbody>
         {% for item in feed %}
         <tr>
-
             <td><a href="{{ item[0].url }}" target="_blank">{{ item[0].title }}</a></td>
-            <td>{{ item[1].portalname }}</td>
-            <td>{{ item[1].name }}</td>
+            <td>{{ item[1].feed.portalname }}</td>
+            <td>{{ item[1].list.name }}</td>
             <td>{{ item[0].post_date.strftime('%H:%M:%S %d/%m/%Y') }}</td>
             <td><a class="btn btn-light"
                     href="/save?title={{item['title']}}&link={{item['link']}}&portalname={{item['portalname']}}&post_date={{item['post_date']}}">Save</a>
@@ -30,4 +29,6 @@ Home
         {% endfor %}
     </tbody>
 </table>
+{{ pagination.info }}
+{{ pagination.links }}
 {% endblock %}
