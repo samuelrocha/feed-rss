@@ -7,6 +7,7 @@ from flask import render_template
 from requests.exceptions import MissingSchema
 
 PER_PAGE = 15
+UPDATE_TIME = 30
 
 def get_xml(url):
     try:

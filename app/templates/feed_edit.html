@@ -6,7 +6,7 @@ Edit Feed
 
 {% block main %}
 {{ form.csrf_token }}
-<form class="container" action="/feed/edit/{{form.id.data}}" method="POST">
+<form class="container" action="/feed/edit/{{form.id.data}}" method="post">
     <div class="mb-3">
         {{ form.portalname.label(class="form-label") }}
         {{ form.portalname(class="form-control", disabled=True) }}
@@ -24,7 +24,7 @@ Edit Feed
         {{ form.list_id(class="form-select") }}
     </div>
     <div class="mb-3">
-        <a href="/feed/list" class="btn btn-primary mb-3">Cancel</a>
+        <a href="/feed" class="btn btn-primary mb-3">Cancel</a>
         <button type="submit" class="btn btn-primary mb-3">Save</button>
     </div>
 </form>

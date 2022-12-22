@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from app.controllers.helpers import get_xml
 from flask import render_template, request
 from flask_paginate import Pagination, get_page_parameter
-from app.controllers.helpers import apology, PER_PAGE
+from app.controllers.helpers import apology, PER_PAGE, UPDATE_TIME
 
 
 @app.route('/news')
@@ -18,19 +18,11 @@ def news():
     list_feed = db.session.execute(smtm).all()
 
     now = datetime.now()
-    update_delay = timedelta(minutes=5)
-    delete_delay = timedelta(hours=24)
+    update_delay = timedelta(minutes=UPDATE_TIME)
 
     for item in list_feed:
         
         min_to_update = item[0].feed.update_date + update_delay
-        min_to_delete = item[0].feed.update_date + delete_delay
-
-        if now > min_to_delete:
-            smtm = db.select(News).where(News.feed_id == item[0].feed.id)
-            old_news = db.session.execute(smtm).all()
-            for news in old_news:
-                db.session.delete(news[0])
 
         if now > min_to_update:
             
@@ -45,7 +37,7 @@ def news():
                 if not old_news:
                     db.session.add(news)
 
-        item[0].feed.update_date = now
+            item[0].feed.update_date = now
   
     db.session.commit()
 

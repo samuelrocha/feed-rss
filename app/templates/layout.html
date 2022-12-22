@@ -12,7 +12,7 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
     {% block config %}{% endblock %}
-    <title>Feed RSS - {% block title %}{% endblock %}</title>
+    <title>News Hub - {% block title %}{% endblock %}</title>
 </head>
 
 <body>
@@ -47,8 +47,18 @@
                             Feed
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/feed/list">List</a></li>
+                            <li><a class="dropdown-item" href="/feed">Show</a></li>
                             <li><a class="dropdown-item" href="/feed/add">Add</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            List
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/list">Show</a></li>
+                            <li><a class="dropdown-item" href="/list/add">Add</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">

@@ -11,8 +11,7 @@ Feed List
             <th scope="col">Portal Name</th>
             <th scope="col">Category</th>
             <th scope="col">Last Update</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            <th scope="col" class="text-center">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -20,8 +19,11 @@ Feed List
         <tr>
             <td>{{ feed[0].portalname }}</td>
             <td>{{ feed[1].name }}</td>
-            <td><a href="/feed/edit/{{feed[2].id}}">Edit</a></td>
-            <td><a href="/feed/remove/{{feed[2].id}}">Remove</a></td>
+            <td>{{ feed[0].update_date.strftime("%H:%M:%S %d/%m/%Y") }}</td>
+            <td class="text-center">
+                <a href="/feed/edit/{{feed[2].id}}" class="btn btn-light">Edit</a>
+                <a href="/feed/remove/{{feed[2].id}}" class="btn btn-light">Remove</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

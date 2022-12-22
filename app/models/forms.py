@@ -46,3 +46,10 @@ class EditPasswordForm(FlaskForm):
         'confirm', 'Password must be match'), Length(8, 21, "At least 8 characters, maximum 21")])
     confirm = PasswordField('Repeat Password', [InputRequired(), Length(
         8, 21, "At least 8 characters, maximum 21")])
+
+class AddListForm(FlaskForm):
+    name = StringField('Name', [InputRequired(), Length(min=1,max=50)])
+
+class EditListForm(FlaskForm):
+    id = StringField("Id")
+    name = StringField('Name', [InputRequired(), Length(min=1,max=50)])

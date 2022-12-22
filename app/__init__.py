@@ -15,5 +15,5 @@ login_manager.init_app(app)
 migrate = Migrate(app, db)
 
 
-from app.controllers import feed, helpers, errors, user, save, news
+from app.controllers import feed, helpers, errors, listr, user, save, news
 from app.models import Feed, List_Feed, List, News, Save, User

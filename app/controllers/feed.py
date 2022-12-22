@@ -64,13 +64,13 @@ def add_feed():
             else:
                 return "FEED JÁ EXISTE NA LISTA"
 
-        return redirect('/feed/list')
+        return redirect('/feed')
 
     return render_template('feed_add.html', form=form)
 
 
 # READ
-@app.get("/feed/list")
+@app.get("/feed")
 @login_required
 def list_feed():
 
@@ -134,7 +134,7 @@ def edit_feed(id=None):
 
             db.session.commit()
 
-            return redirect('/feed/list')
+            return redirect('/feed')
         else:
             return "FEED JÁ EXISTE NA LISTA"
 
@@ -173,4 +173,4 @@ def remove_feed(id):
     db.session.delete(list_feed[0])
     db.session.commit()
 
-    return redirect('/feed/list')
+    return redirect('/feed')
