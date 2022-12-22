@@ -29,9 +29,18 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/news">Newsfeed</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/profile">Profile</a>
+                    {% if current_user.username %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ current_user.username.title() }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/save/list">Favorite</a></li>
+                            <li><a class="dropdown-item" href="/profile">Settings</a></li>
+                        </ul>
                     </li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
