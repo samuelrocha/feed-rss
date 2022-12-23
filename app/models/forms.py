@@ -53,3 +53,6 @@ class AddListForm(FlaskForm):
 class EditListForm(FlaskForm):
     id = StringField("Id")
     name = StringField('Name', [InputRequired(), Length(min=1,max=50)])
+
+class FilterListForm(FlaskForm):
+    list_id = SelectField('List', [InputRequired()], coerce=int)

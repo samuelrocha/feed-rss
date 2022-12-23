@@ -2,7 +2,6 @@ from app import app, db
 from flask import render_template, request, redirect
 from app.models.forms import AddFeedForm, EditFeedForm
 from flask_login import login_required, current_user
-from datetime import timezone, timedelta
 from app.models.List import List
 from app.models.Feed import Feed
 from app.models.List_Feed import List_Feed

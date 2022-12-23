@@ -5,6 +5,17 @@ Home
 {% endblock %}
 
 {% block main %}
+<div class="container">
+    <form class="row">
+        <div class="col">
+            {{ form.list_id(class="form-select") }}
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary mb-3">Filter</button>
+        </div>
+    </form>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -22,8 +33,7 @@ Home
             <td>{{ item[1].feed.portalname }}</td>
             <td>{{ item[1].list.name }}</td>
             <td>{{ item[0].post_date.strftime('%H:%M:%S %d/%m/%Y') }}</td>
-            <td><a class="btn btn-light"
-                    href="/save/add/{{ item[0].id }}">Save</a>
+            <td><a class="btn btn-light" href="/save/add/{{ item[0].id }}">Save</a>
             </td>
         </tr>
         {% endfor %}
