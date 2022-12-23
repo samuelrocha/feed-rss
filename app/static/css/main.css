@@ -1,10 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto&display=swap');
 
+.title{
+    font-family: 'new york times', Times, serif;
+    font-weight: normal;
+}
+
+.offcanvas-header{
+    justify-content: left;
+}
+
+.news-hub{
+    margin-left: 20px;
+}
+
 body{
     font-family: 'Roboto', sans-serif;
-    /* font-family: 'Bebas Neue', cursive; */
 }
 
 .nav-link, .navbar-brand{
     color: white!important;
+}
+
+
+.profile-img{
+    width: 32px;
+    background-color: white;
+}
+
+.form-page{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.form-register{
+    margin-top: 200px;
+}
+
+.main{
+    display: flex;
+    height: 100vh;
+}
+
+h1{
+    font-size: 3em;
+    font-family: 'Bebas Neue', cursive;
 }

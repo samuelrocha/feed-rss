@@ -17,7 +17,7 @@ class RegisterForm(FlaskForm):
     email = StringField('E-mail', [InputRequired(), Email()])
     password = PasswordField('Password', [InputRequired(), EqualTo(
         'confirm', 'Password must be match'), Length(8, 21, "At least 8 characters, maximum 21")])
-    confirm = PasswordField('Repeat Password', [InputRequired(), Length(
+    confirm = PasswordField('Confirm Password', [InputRequired(), Length(
         8, 21, "At least 8 characters, maximum 21")])
 
 

@@ -5,33 +5,38 @@ Register
 {% endblock %}
 
 {% block main %}
-{% if msg %} 
+{% if msg %}
 {{ msg }}
 {% endif %}
-<form class="container" action="/register" method="POST">
-    {{ form.csrf_token }}
-    <div class="mb-3">
-        {{ form.username.label(class="form-label") }}
-        {{ form.username(class="form-control", placeholder="username", id="staticEmail2") }}
+<div class="main">
+    <div class="form-page form-register">
+        <form class="container" action="/register" method="POST">
+            <h1 class="text-center">REGISTER</h1>
+            {{ form.csrf_token }}
+            <div class="mb-3">
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control", placeholder="username", id="staticEmail2", autofocus=True) }}
+            </div>
+            <div class="mb-3">
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-control", placeholder="nickname") }}
+            </div>
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", placeholder="email") }}
+            </div>
+            <div class="mb-3">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control", placeholder="password") }}
+            </div>
+            <div class="mb-3">
+                {{ form.confirm.label(class="form-label") }}
+                {{ form.confirm(class="form-control", placeholder="confirm password") }}
+            </div>
+            <div class="mb-3 text-center">
+                <button type="submit" class="btn btn-dark">Register</button>
+            </div>
+        </form>
     </div>
-    <div class="mb-3">
-        {{ form.name.label(class="form-label") }}
-        {{ form.name(class="form-control", placeholder="nickname") }}
-    </div>
-    <div class="mb-3">
-        {{ form.email.label(class="form-label") }}
-        {{ form.email(class="form-control", placeholder="email") }}
-    </div>
-    <div class="mb-3">
-        {{ form.password.label(class="form-label") }}
-        {{ form.password(class="form-control", placeholder="password") }}
-    </div>
-    <div class="mb-3">
-        {{ form.confirm.label(class="form-label") }}
-        {{ form.confirm(class="form-control", placeholder="repeat password") }}
-    </div>
-    <div class="mb-3">
-        <button type="submit" class="btn btn-primary mb-3">Register</button>
-    </div>
-</form>
+</div>
 {% endblock %}

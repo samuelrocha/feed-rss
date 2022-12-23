@@ -23,7 +23,7 @@ def login_post():
         user = User.check_password(form)
         if user:
             login_user(user)
-            return redirect('/newsfeed')
+            return redirect('/news')
         else:
             return "PASSWORD INCORRETO"
 
@@ -59,7 +59,7 @@ def register_post():
             l = List('General', current_user.id)
             db.session.add(l)
             db.session.commit()
-            return redirect('/newsfeed')
+            return redirect('/news')
         else:
             return "USUÁRIO JÁ EXISTE"
 

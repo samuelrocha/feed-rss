@@ -13,60 +13,134 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
     {% block config %}{% endblock %}
     <title>News Hub - {% block title %}{% endblock %}</title>
+    <style>
+        @font-face {
+            font-family: 'new york times';
+            src: url("{{ url_for('static', filename='fonts/times_new_yorker.ttf') }}") format('truetype');
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-primary">
+    <nav class="navbar navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/news">Newsfeed</a>
+            <div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand title news-hub" href="#">NEWS HUB</a>
+            </div>
+            {% if current_user.username %}
+            <div class="dropdown dropstart">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <img src="https://avatars.dicebear.com/api/bottts/:{{current_user.id}}.svg"
+                        class="rounded-circle border border-1 profile-img">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item" href="/save/list">Favorite</a></li>
+                    <li><a class="dropdown-item" href="/profile">Settings</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
                     </li>
-                    {% if current_user.username %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            {{ current_user.username.title() }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/save/list">Favorite</a></li>
-                            <li><a class="dropdown-item" href="/profile">Settings</a></li>
-                        </ul>
-                    </li>
-                    {% endif %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Feed
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/feed">Show</a></li>
-                            <li><a class="dropdown-item" href="/feed/add">Add</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            List
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/list">Show</a></li>
-                            <li><a class="dropdown-item" href="/list/add">Add</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
                 </ul>
             </div>
-        </div>
+            {% else %}
+
+            <div class="d-flex">
+                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link news-hub" href="/register">Register</a>
+            </div>
+            {% endif %}
+            <div class="offcanvas offcanvas-size-sm offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <button class="navbar-toggler" type="button" data-bs-dismiss="offcanvas"
+                        data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <span class="news-hub">
+                        <a class="navbar-brand title" href="#">NEWS HUB</a>
+                    </span>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        {% if current_user.username %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active" aria-current="page" href="/news">News</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Feeds
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="/feed/add">add a new feed</a></li>
+                                <li><a class="dropdown-item" href="/feed">show all feeds</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Lists
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="/list/add">add a new list</a></li>
+                                <li><a class="dropdown-item" href="/list">show all lists</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <hr class="offcanvas-divider">
+                        </li>
+                        {% endif %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active" aria-current="page" href="/news">Tour</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active" aria-current="page" href="#" target="_blank">Donate</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Whoami
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li>
+                                    <a class="dropdown-item" href="https://www.linkedin.com/in/samuelrocha27/"
+                                        target="_blank">Linkedin</a>
+                                </li>
+                                <li>
+                                    <a class=" dropdown-item" href="https://twitter.com/codigo_expresso"
+                                        target="_blank">Twitter</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="https://www.youtube.com/@codigo_expresso"
+                                        target="_blank">Youtube</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Project
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li>
+                                    <a class="dropdown-item" href="https://github.com/samuelrocha/news-hub"
+                                        target="_blank">Repository</a>
+                                </li>
+                                <li>
+                                    <a class=" dropdown-item" href="https://www.gnu.org/licenses/gpl-3.0.html"
+                                        target="_blank">License</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
     </nav>
     {% block main %}{% endblock %}
 </body>
