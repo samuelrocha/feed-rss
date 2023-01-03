@@ -7,7 +7,6 @@ from flask_login import login_required, current_user
 from datetime import datetime, timedelta
 from app.controllers.helpers import get_xml
 from flask import render_template, request
-from flask_paginate import Pagination, get_page_parameter
 from app.controllers.helpers import apology, PER_PAGE, UPDATE_TIME
 
 
@@ -81,12 +80,13 @@ def news():
 
     length = len(items)
 
-    search = False
-    q = request.args.get('q')
-    if q:
-        search = True
-
-    page = request.args.get(get_page_parameter(), type=int, default=1)
+    page = request.args.get('page')
+    if not page:
+        page = 1
+    elif not page.isnumeric():
+        return apology('Not Found', 404)
+    else:
+        page = int(page)
 
     last_page = length // PER_PAGE + 1
     if page > last_page:
@@ -94,7 +94,24 @@ def news():
 
     i = (page-1)*PER_PAGE
     items = items[i:i+PER_PAGE]
-    pagination = Pagination(
-        page=page, total=length, search=search, record_name='items', per_page=PER_PAGE)
 
-    return render_template('index.html', feed=items, pagination=pagination, form=form)
+    tmp = []
+    pagination = []
+    pagination.append([1, False])
+    if page != 1:
+        if page != 2:
+            pagination.append([page-1, False])
+        pagination.append([page, True])
+    else:
+        pagination[0][1] = True
+    if page != last_page:
+        pagination.append([page+1, False])
+        if page + 1 != last_page:
+            pagination.append([last_page, False])
+
+    if list_id:
+        if list_id.isnumeric():
+            for item in pagination:
+                item.append(list_id)
+
+    return render_template('news_show.html', feed=items, form=form, pagination=pagination)

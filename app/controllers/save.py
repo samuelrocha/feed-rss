@@ -24,7 +24,7 @@ def add_save(id: None):
                 save = Save(current_user.id, id)
                 db.session.add(save)
                 db.session.commit()
-                return redirect('/news')
+                return redirect('/save/list')
             else:
                 return apology("News not found", 400)
         return apology("Alredy in the saved list", 400)

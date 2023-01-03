@@ -6,15 +6,20 @@ Edit List
 
 {% block main %}
 {{ form.csrf_token }}
-<form action="/list/edit/{{ form.id.data }}" method="post" class="container">
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-        {{ form.name.label(class="form-label") }}
-        {{ form.name(class="form-control", placeholder="Name") }}
+<div class="main">
+    <div class="form-page">
+        <form action="/list/edit/{{ form.id.data }}" method="post" class="container">
+            {{ form.hidden_tag() }}
+            <h1 class="text-center">EDIT LIST</h1>
+            <div class="mb-3">
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-control", placeholder="Name") }}
+            </div>
+            <div class="mb-3 text-center">
+                <a href="/list" class="btn btn-light mb-3">Cancel</a>
+                <button type="submit" class="btn btn-dark mb-3">Save</button>
+            </div>
+        </form>
     </div>
-    <div class="mb-3">
-        <a href="/list" class="btn btn-primary mb-3">Cancel</a>
-        <button type="submit" class="btn btn-primary mb-3">Save</button>
-    </div>
-</form>
+</div>
 {% endblock %}

@@ -94,7 +94,7 @@ def list_feed():
     feeds = feeds[i:i+PER_PAGE]
     pagination = Pagination(page=page, total=length, search=search, record_name='feeds', per_page=PER_PAGE)
 
-    return render_template("feed_list.html", feeds=feeds, pagination=pagination)
+    return render_template("feed_show.html", feeds=feeds, pagination=pagination)
 
 # UPDATE
 @app.route("/feed/edit/<id>", methods=["GET", "POST"])

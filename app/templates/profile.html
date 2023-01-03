@@ -1,14 +1,25 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
 
-{% block title %} 
+{% block title %}
 Profile
-{% endblock %} 
+{% endblock %}
 
 {% block main %}
-<img src="https://avatars.dicebear.com/api/bottts/:{{current_user.id}}.svg" alt="" width="20%">
-<ul>
-    <li>Nickname: {{ current_user.name }} <a href="/profile/edit/nickname">Change</a></li>
-    <li>Email: {{ current_user.email }} <a href="/profile/edit/email">Change</a></li>
-    <li>Password: *** <a href="/profile/edit/password">Change</a></li>
-</ul>
+
+<div class="container">
+    <div class="margin-top text-center">
+        <img src="https://avatars.dicebear.com/api/bottts/:{{current_user.id}}.svg"
+            class=" rounded-circle border border-3 profile-img-full">
+    </div>
+    <ul class="text-center">
+        <li>{{ current_user.name.title() }}</li>
+        <li><a class="btn btn-light" href="/profile/edit/nickname">Change Nickname</a></li>
+        <li><hr></li>
+        <li>{{ current_user.email }}</li>
+        <li><a class="btn btn-light" href="/profile/edit/email">Change E-Mail</a></li>
+        <li><hr></li>
+        <li>***</li>
+        <li><a class="btn btn-light" href="/profile/edit/password">Change Password</a></li>
+    </ul>
+</div>
 {% endblock %}

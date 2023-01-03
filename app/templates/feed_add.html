@@ -11,20 +11,25 @@ Add
 
 
 {% block main %}
-<form class="container" action="/feed/add" method="POST">
-    {{ form.csrf_token }}
-    <div class="mb-3">
-        {{ form.url.label(class="form-label") }}
-        {{ form.url(class="form-control", placeholder="http://example.com") }}
+<div class="main">
+    <div class="form-page">
+        <form class="container" action="/feed/add" method="POST">
+            <h1 class="text-center">ADD NEW FEED</h1>
+            {{ form.csrf_token }}
+            <div class="mb-3">
+                {{ form.url.label(class="form-label") }}
+                {{ form.url(class="form-control", placeholder="http://example.com") }}
+            </div>
+            <div class="mb-3">
+                {{
+                form.list_id(class="form-select")
+                }}
+            </div>
+            <div class="mb-3 text-center">
+                <a href="/feed/list" class="btn btn-light mb-3">Cancel</a>
+                <button type="submit" class="btn btn-dark mb-3">Add</button>
+            </div>
+        </form>
     </div>
-    <div class="mb-3">
-        {{ 
-            form.list_id(class="form-select")
-        }}
-    </div>
-    <div class="mb-3">
-        <a href="/feed/list" class="btn btn-primary mb-3">Cancel</a>
-        <button type="submit" class="btn btn-primary mb-3">Add</button>
-    </div>
-</form>
+</div>
 {% endblock %}

@@ -6,26 +6,31 @@ Edit Feed
 
 {% block main %}
 {{ form.csrf_token }}
-<form class="container" action="/feed/edit/{{form.id.data}}" method="post">
-    <div class="mb-3">
-        {{ form.portalname.label(class="form-label") }}
-        {{ form.portalname(class="form-control", disabled=True) }}
+<div class="main">
+    <div class="form-page form-register">
+        <form class="container" action="/feed/edit/{{form.id.data}}" method="post">
+            <h1 class="text-center">EDIT FEED</h1>
+            <div class="mb-3">
+                {{ form.portalname.label(class="form-label") }}
+                {{ form.portalname(class="form-control", disabled=True) }}
+            </div>
+            <div class="mb-3">
+                {{ form.description.label(class="form-label") }}
+                {{ form.description(class="form-control", disabled=True) }}
+            </div>
+            <div class="mb-3">
+                {{ form.url.label(class="form-label") }}
+                {{ form.url(class="form-control", placeholder="http://example.com") }}
+            </div>
+            <div class="mb-3">
+                {{ form.list_id.label(class="form-label") }}
+                {{ form.list_id(class="form-select") }}
+            </div>
+            <div class="mb-3 text-center">
+                <a href="/feed" class="btn btn-light mb-3">Cancel</a>
+                <button type="submit" class="btn btn-dark mb-3">Save</button>
+            </div>
+        </form>
     </div>
-    <div class="mb-3">
-        {{ form.description.label(class="form-label") }}
-        {{ form.description(class="form-control", disabled=True) }}
-    </div>
-    <div class="mb-3">
-        {{ form.url.label(class="form-label") }}
-        {{ form.url(class="form-control", placeholder="http://example.com") }}
-    </div>
-    <div class="mb-3">
-        {{ form.list_id.label(class="form-label") }}
-        {{ form.list_id(class="form-select") }}
-    </div>
-    <div class="mb-3">
-        <a href="/feed" class="btn btn-primary mb-3">Cancel</a>
-        <button type="submit" class="btn btn-primary mb-3">Save</button>
-    </div>
-</form>
+</div>
 {% endblock %}

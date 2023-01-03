@@ -27,6 +27,11 @@ body{
     background-color: white;
 }
 
+.profile-img-full{
+    width: 80%;
+    height: auto;
+}
+
 .form-page{
     justify-content: center;
     display: flex;
@@ -46,4 +51,27 @@ body{
 h1{
     font-size: 3em;
     font-family: 'Bebas Neue', cursive;
+}
+
+.margin-top{
+    margin-top: 70px;
+}
+
+ul{
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.news{
+    width: 80%;
+    margin: auto;
+}
+
+.form-item{
+    display: inline-block;
+}
+
+.filter, .card{
+    margin-bottom: 20px;
 }

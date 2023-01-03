@@ -5,7 +5,7 @@ Feed List
 {% endblock %}
 
 {% block main %}
-<table class="table">
+<table class="table margin-top">
     <thead>
         <tr>
             <th scope="col">Portal Name</th>
@@ -28,6 +28,11 @@ Feed List
         {% endfor %}
     </tbody>
 </table>
-{{ pagination.info }}
-{{ pagination.links }}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col">
+            {{ pagination.links }}
+        </div>
+    </div>
+</div>
 {% endblock %}
